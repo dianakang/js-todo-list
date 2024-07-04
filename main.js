@@ -12,8 +12,16 @@
 
 let taskInput = document.getElementById("task-input");
 let addButton = document.getElementById("add-button");
+let tabs = document.querySelectorAll(".task-tabs div");
 let taskList = [];
+let mode = 'all'
+let filterList=[]
 addButton.addEventListener("click", addTask);
+
+for(let i=1; i<tabs.length; i++){
+  tabs[i].addEventListener("click", function(event){filter(event)})
+}
+console.log(tabs);
 
 function addTask() {
   let task = {
@@ -28,22 +36,28 @@ function addTask() {
 
 // UI 그려주는 로직
 function render() {
+  let list = []
+  if (mode === "all"){
+    list = taskList;
+  } else if (mode === "inprogress" || mode === "done"){
+    list = filterList;
+  }
   let resultHTML = "";
-  for (let i = 0; i < taskList.length; i++) {
-    if (taskList[i].isCompleted == true) {
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].isCompleted == true) {
       resultHTML += `<div class="task">
-            <div class="task-done">${taskList[i].taskContent}</div>
+            <div class="task-done">${list[i].taskContent}</div>
             <div>
-                <button onclick="toggleComplete('${taskList[i].id}')">Check</button>
-                <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+                <button onclick="toggleComplete('${list[i].id}')">Check</button>
+                <button onclick="deleteTask('${list[i].id}')">Delete</button>
             </div>
         </div>`;
     } else {
       resultHTML += `<div class="task">
-            <div>${taskList[i].taskContent}</div>
+            <div>${list[i].taskContent}</div>
             <div>
-                <button onclick="toggleComplete('${taskList[i].id}')">Check</button>
-                <button onclick="deleteTask('${taskList[i].id}')">Delete</button>
+                <button onclick="toggleComplete('${list[i].id}')">Check</button>
+                <button onclick="deleteTask('${list[i].id}')">Delete</button>
             </div>
         </div>`;
     }
@@ -70,6 +84,32 @@ function deleteTask(id){
         }
     }
     render(); // 값을 업데이트하면 UI도 반드시 업데이트 해주어야 한다.
+}
+
+function filter(event){
+  mode = event.target.id;
+  filterList = [];
+  if(mode === "all"){
+    render();
+  }else if(mode === "inprogress"){
+    //task.isCompleted=false;
+    for(let i=0;i<taskList.length;i++){
+      if (taskList[i].isCompleted===false){
+        filterList.push(taskList[i]);
+      }
+    }
+    render();
+    console.log("진행 중", filterList);
+  } else if(mode ==="done"){
+    //task.isCompleted=true;
+    for(let i=0;i<taskList.length;i++){
+      if (taskList[i].isCompleted===true){
+        filterList.push(taskList[i]);
+      }
+    }
+    render();
+    console.log("완료", filterList);
+  }
 }
 
 function randomIDGenerate() {
