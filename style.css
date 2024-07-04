@@ -1,48 +1,103 @@
-body{
-    margin:0;
+body {
+    font-family: Arial, sans-serif;
     background-image: url("images/NYUBrand_NYC_23.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    margin: 0;
+    padding: 0;
 }
 
-.container{
+.container {
     background-color: white;
     min-height: 100vh;
-    box-shadow: blue 0px 0px 0px 2px inset, rgb(255, 255, 255) 10px -10px 0px -3px, rgb(31, 193, 27) 10px -10px, rgb(255, 255, 255) 20px -20px 0px -3px, rgb(255, 217, 19) 20px -20px, rgb(255, 255, 255) 30px -30px 0px -3px, rgb(255, 156, 85) 30px -30px, rgb(255, 255, 255) 40px -40px 0px -3px, rgb(255, 85, 85) 40px -40px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
-.task-area{
+
+.input-area {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.input-area input {
+    width: calc(100% - 40px);
+    padding: 10px;
+    font-size: 16px;
+}
+
+.input-area button {
+    width: 30px;
+    font-size: 20px;
+}
+
+.task-area {
     border: 1px solid plum;
 }
 
-.task-tabs{
+.task-tabs {
     display: flex;
     border-bottom: 1px solid plum;
     position: relative;
-}
-.task-tabs div{
-    padding:1em;
+    margin-bottom: 20px;
 }
 
-#under-line{
+.task-tabs .tab {
+    padding: 1em;
+    cursor: pointer;
+}
+
+.task-tabs .tab.active {
+    font-weight: bold;
+}
+
+#under-line {
     height: 4px;
     background-color: blueviolet;
     position: absolute;
     width: 80px;
-    left:0px;
-    top:52px;
-    padding: 0px;
+    left: 0px;
+    top: 52px;
+    transition: 0.5s;
 }
 
-.task{
+.task {
     display: flex;
     justify-content: space-between;
     padding: 1em;
+    border-bottom: 1px solid #ccc;
 }
 
-.task-done{
+.task-done {
     text-decoration: line-through;
 }
 
-.task-tabs div{
-    cursor:pointer
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 600px) {
+    .input-area input {
+        width: calc(100% - 40px);
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .input-area button {
+        width: 30px;
+        font-size: 18px;
+    }
+
+    .task {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .task div:last-child {
+        align-self: flex-end;
+    }
 }
